@@ -14,8 +14,8 @@ git push
 
 IntelliJ IDEA:
 
-1. Git → Pull... → remote `upstream`, ветка `release` → Pull.
-2. Git → Push (Ctrl+Shift+K) → Push.
+1. Git → Pull... → в списке remote выбери `upstream`, ветку `release` → Pull
+2. Git → Push (Ctrl+Shift+K) → Push
 
 Если git пишет "conflict", оставить мои значения CUDA/cu128/сети, остальное взять из новой версии.
 
