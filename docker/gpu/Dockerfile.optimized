@@ -2,7 +2,7 @@
 
 # CUDA_VERSION is overridden per-arch in docker-bake.hcl (amd64=12.6.3, arm64=12.9.1).
 # The arm64 bump is required because pytorch.org/whl/cu126 has no aarch64 wheels.
-ARG CUDA_VERSION=12.6.3
+ARG CUDA_VERSION=12.9.1
 
 # Stage 1: Builder - Use devel image for compilation
 FROM --platform=$BUILDPLATFORM nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn-devel-ubuntu24.04 AS builder

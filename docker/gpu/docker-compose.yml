@@ -10,13 +10,14 @@ services:
         - ghcr.io/remsky/kokoro-fastapi-cache:gpu-arm64
       # Default builds cu126 wheels, multi-arch (Maxwell through Ada: GTX 9xx, 10xx, 20xx, 30xx, 40xx).
       # Temp fix for NVIDIA Blackwell / RTX 50-series, uncomment:
-      # args:
-      #   GPU_EXTRA: gpu-cu128
-      #   CUDA_VERSION: 12.8.1
+      args:
+        GPU_EXTRA: gpu-cu128
+        CUDA_VERSION: 12.9.1
     volumes:
       - ../../web:/app/web  # hot reload changes to web player code
+    restart: unless-stopped
     ports:
-      - "8880:8880"
+      - "127.0.0.1:8880:8880"
     env_file:
       - path: ../../.env
         required: false
@@ -32,3 +33,10 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+
+
+networks:
+  default:
+    external:
+      name: kokoro-net
+# docker network create kokoro-net

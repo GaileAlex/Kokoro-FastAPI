@@ -143,7 +143,7 @@ target "gpu-amd64" {
     inherits = ["_gpu_base"]
     platforms = ["linux/amd64"]
     args = {
-        CUDA_VERSION = "12.6.3"
+        CUDA_VERSION = "12.9.1"
     }
     cache-from = ["type=registry,ref=${REGISTRY}/${OWNER}/${REPO}-cache:gpu-amd64"]
     # Per-arch tag carries the wheel variant so it parallels gpu-cu128-amd64.
