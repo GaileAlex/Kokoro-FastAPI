@@ -19,8 +19,3 @@ IntelliJ IDEA:
 
 On a conflict, keep my CUDA/cu128/network values and take everything else from the new version.
 
-## Don't
-
-Don't enable Actions in the fork (the "I understand my workflows..." button): a push to `release` would trigger the publish workflow.
-
-Don't click "Compare & pull request" on the remsky repo page: it would open a PR with my local settings against the original.
