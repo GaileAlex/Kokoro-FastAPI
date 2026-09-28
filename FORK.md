@@ -1,11 +1,11 @@
-# Мой форк Kokoro-FastAPI
+# My Kokoro-FastAPI fork
 
-Оригинал: https://github.com/remsky/Kokoro-FastAPI (remote `upstream`).
-Мои правки для RTX 50 (cu128, CUDA 12.9.1, сеть `kokoro-net`) лежат коммитом поверх ветки `release`.
+Original: https://github.com/remsky/Kokoro-FastAPI (remote `upstream`).
+My RTX 50 changes (cu128, CUDA 12.9.1, `kokoro-net` network) sit as a commit on top of the `release` branch.
 
-## Обновление до новой версии Kokoro
+## Updating to a new Kokoro release
 
-Терминал:
+Terminal:
 
 ```bash
 git pull upstream release
@@ -14,11 +14,13 @@ git push
 
 IntelliJ IDEA:
 
-1. Git → Pull... → в списке remote выбери `upstream`, ветку `release` → Pull
+1. Git → Pull... → pick `upstream` in the remote list, branch `release` → Pull
 2. Git → Push (Ctrl+Shift+K) → Push
 
-Если git пишет "conflict", оставить мои значения CUDA/cu128/сети, остальное взять из новой версии.
+On a conflict, keep my CUDA/cu128/network values and take everything else from the new version.
 
-## Не делать
+## Don't
 
-Не включать Actions в форке (кнопка "I understand my workflows..."): push в `release` запустит workflow публикации.
+Don't enable Actions in the fork (the "I understand my workflows..." button): a push to `release` would trigger the publish workflow.
+
+Don't click "Compare & pull request" on the remsky repo page: it would open a PR with my local settings against the original.
