@@ -76,13 +76,18 @@ class WordTimestamp(BaseModel):
         None,
         description="Resolved voice that spoke the word, present only when allow_voice_tags is on",
     )
+    phonemes: Optional[str] = Field(
+        None,
+        description="Phonemes of the word as the model spoke them (misaki), present when the G2P gave them",
+    )
 
     @model_serializer(mode="wrap")
     def _omit_unset_voice(self, handler):
-        # keeps responses byte-identical to before the field existed when tags are off
+        # keeps responses byte-identical to before the fields existed when they are not set
         data = handler(self)
-        if data.get("voice") is None:
-            data.pop("voice", None)
+        for key in ("voice", "phonemes"):
+            if data.get(key) is None:
+                data.pop(key, None)
         return data
 
 

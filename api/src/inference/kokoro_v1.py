@@ -438,6 +438,8 @@ class KokoroV1(BaseModelBackend):
                                             word=str(token.text).strip(),
                                             start_time=start_time,
                                             end_time=end_time,
+                                            # lip sync of talking avatars needs the sounds of each word
+                                            phonemes=getattr(token, "phonemes", None) or None,
                                         )
                                     )
                                     logger.debug(

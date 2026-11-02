@@ -380,6 +380,37 @@ async def test_generate_skips_untimed_tokens(kokoro_backend):
     assert [t.word for t in chunks[0].word_timestamps] == ["What", "key"]
 
 
+@pytest.mark.asyncio
+async def test_generate_timestamps_carry_phonemes(kokoro_backend):
+    """Each word timestamp carries the phonemes of its token; a token without them leaves the field out."""
+    kokoro_backend._model = MagicMock()
+    tokens = [
+        SimpleNamespace(text="Hi", start_ts=0.0, end_ts=0.3, phonemes="hˈI"),
+        SimpleNamespace(text="there", start_ts=0.3, end_ts=0.6, phonemes=None),
+    ]
+    result = SimpleNamespace(
+        audio=torch.zeros(24000), tokens=tokens, pred_dur=torch.ones(8), phonemes=""
+    )
+
+    with (
+        patch("api.src.core.paths.load_voice_tensor", return_value=torch.ones(1)),
+        patch("api.src.core.paths.save_voice_tensor"),
+    ):
+        mock_pipeline = MagicMock(return_value=iter([result]))
+        with patch("api.src.inference.kokoro_v1.KPipeline", return_value=mock_pipeline):
+            chunks = [
+                c
+                async for c in kokoro_backend.generate(
+                    "Hi there", "af_voice", lang_code="a", return_timestamps=True
+                )
+            ]
+
+    stamps = chunks[0].word_timestamps
+    assert [t.phonemes for t in stamps] == ["hˈI", None]
+    assert stamps[0].model_dump()["phonemes"] == "hˈI"
+    assert "phonemes" not in stamps[1].model_dump()
+
+
 def test_espeak_word_timestamps_basic():
     """Word times derived from pred_dur for an espeak (non-English) result."""
     from api.src.inference.kokoro_v1 import _espeak_word_timestamps
